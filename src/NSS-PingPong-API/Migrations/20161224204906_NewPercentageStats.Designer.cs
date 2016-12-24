@@ -8,9 +8,10 @@ using NSS_PingPong_API.Data;
 namespace NSSPingPongBackend.Migrations
 {
     [DbContext(typeof(NSSPingPongContext))]
-    partial class NSSPingPongContextModelSnapshot : ModelSnapshot
+    [Migration("20161224204906_NewPercentageStats")]
+    partial class NewPercentageStats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")

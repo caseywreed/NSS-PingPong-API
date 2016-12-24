@@ -20,13 +20,15 @@ namespace NSS_PingPong_API.Models
 
         //Computed Stats
         public double? WinPercentage { get; set; }
+        public double? SinglesWinPercentage { get; set; }
+        public double? DoublesWinPercentage { get; set; }
         public double? AvgPointDiff { get; set; }
         public double? Rating { get; set; }
 
         public void CalculateStats(NSSPingPongContext context)
         {
             Games = Wins + Losses;
-            WinPercentage = (Wins / Games) * 10;
+            WinPercentage = (Wins / Games) * 100;
 
             var gps = context.GamePlayer.Where(g => g.PlayerId == PlayerId);
 
@@ -51,8 +53,8 @@ namespace NSS_PingPong_API.Models
             }
             else
             {
-                double SinglesWinPercentage = gpSinglesWins / gpSinglesGames;
-                double DoublesWinPercentage = gpDoublesWins / gpDoublesGames;
+                SinglesWinPercentage = ((double)gpSinglesWins / (double)gpSinglesGames) * 100;
+                DoublesWinPercentage = ((double)gpDoublesWins / (double)gpDoublesGames) * 100;
                 Rating = ( ( (SinglesWinPercentage * .45) + (DoublesWinPercentage * .35) + (WinPercentage * .2) ) * 1000 );
             }
         }
