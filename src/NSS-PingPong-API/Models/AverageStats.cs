@@ -14,6 +14,8 @@ namespace NSS_PingPong_API.Models
 
         //Computed Stats
         public double WinPercentage { get; set; }
+        public double SinglesWinPercentage { get; set; }
+        public double DoublesWinPercentage { get; set; }
         public double AvgPointDiff { get; set; }
         public double Rating { get; set; }
     }

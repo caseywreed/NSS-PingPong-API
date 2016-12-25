@@ -168,7 +168,15 @@ namespace NSS_PingPong_API.Controllers
         {
             var statsList = context.Stats.ToList();
             var statsCount = statsList.Count();
+
+            var singlesGames = context.GamePlayer.Where(gp => gp.Singles == true).ToList().Count();
+            var singlesWins = context.GamePlayer.Where(gp => gp.Singles == true && gp.Won == true).ToList().Count();
+            var doublesGames = context.GamePlayer.Where(gp => gp.Singles == false).ToList().Count();
+            var doublesWins = context.GamePlayer.Where(gp => gp.Singles == false && gp.Won == true).ToList().Count();
+
             double winPercentCounter = 0;
+            double singlesWinPercentCounter = 0;
+            double doublesWinPercentCounter = 0;
             double pointDiffCounter = 0;
             double winCounter = 0;
             double lossCounter = 0;
@@ -181,6 +189,14 @@ namespace NSS_PingPong_API.Controllers
                 {
                     s.WinPercentage = 0;
                 }
+                if (s.SinglesWinPercentage == null)
+                {
+                    s.SinglesWinPercentage = 0;
+                }
+                if (s.DoublesWinPercentage == null)
+                {
+                    s.DoublesWinPercentage = 0;
+                }
                 if (Double.IsNaN((double)s.AvgPointDiff))
                 {
                     s.AvgPointDiff = 0;
@@ -192,6 +208,9 @@ namespace NSS_PingPong_API.Controllers
 
                 winCounter = winCounter + s.Wins;
                 lossCounter = lossCounter + s.Losses;
+                singlesWinPercentCounter = singlesWinPercentCounter + (double)s.SinglesWinPercentage;
+                doublesWinPercentCounter = doublesWinPercentCounter + (double)s.DoublesWinPercentage;
+                winPercentCounter = winPercentCounter + (double)s.WinPercentage;
                 winPercentCounter = winPercentCounter + (double)s.WinPercentage;
                 pointDiffCounter = pointDiffCounter + (double)s.AvgPointDiff;
                 ratingCounter = ratingCounter + (double)s.Rating;
@@ -202,6 +221,8 @@ namespace NSS_PingPong_API.Controllers
                 Wins = winCounter / statsCount,
                 Losses = lossCounter / statsCount,
                 WinPercentage = winPercentCounter / statsCount,
+                SinglesWinPercentage = singlesWinPercentCounter / statsCount,
+                DoublesWinPercentage = doublesWinPercentCounter / statsCount,
                 AvgPointDiff = pointDiffCounter / statsCount,
                 Rating = ratingCounter / statsCount
             };
