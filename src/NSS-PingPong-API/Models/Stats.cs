@@ -53,9 +53,13 @@ namespace NSS_PingPong_API.Models
             }
             else
             {
-                SinglesWinPercentage = ((double)gpSinglesWins / (double)gpSinglesGames) * 100;
-                DoublesWinPercentage = ((double)gpDoublesWins / (double)gpDoublesGames) * 100;
-                Rating = ( ( (SinglesWinPercentage * .45) + (DoublesWinPercentage * .35) + (WinPercentage * .2) ) * 1000 );
+
+                //Problem with Rating being 10,000 more than needed
+                SinglesWinPercentage = (double)gpSinglesWins / (double)gpSinglesGames;
+                DoublesWinPercentage = (double)gpDoublesWins / (double)gpDoublesGames;
+                Rating = ( ( (SinglesWinPercentage * .45) + (DoublesWinPercentage * .35) + (WinPercentage * .2) ) * 10 );
+                SinglesWinPercentage = SinglesWinPercentage * 100;
+                DoublesWinPercentage = DoublesWinPercentage * 100;
             }
         }
 
